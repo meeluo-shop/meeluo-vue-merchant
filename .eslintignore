@@ -1,0 +1,6 @@
+src/assets
+src/ui/icon
+public
+dist
+node_modules
+*.min.js

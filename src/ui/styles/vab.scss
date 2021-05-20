@@ -1,0 +1,245 @@
+/**
+ * @author knows 1002563923@qq.com
+ * @description 全局样式
+ */
+
+@import "./normalize.scss";
+@import "./transition.scss";
+@import "./loading.scss";
+
+$base: ".vab";
+
+@mixin base-scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(144, 147, 153, 0.3);
+    border: 3px solid transparent;
+    border-radius: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(144, 147, 153, 0.5);
+  }
+}
+
+@mixin menu-scrollbar {
+  max-height: 88vh;
+  margin-bottom: 0.5vh;
+  overflow-y: auto;
+  @include base-scrollbar;
+}
+
+html {
+  body {
+    position: relative;
+    box-sizing: border-box;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    font-family: "PingFang SC", Arial, "Microsoft YaHei", sans-serif;
+    font-size: $base-font-size-default;
+    color: #2c3e50;
+    background: #f6f8f9;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    @include base-scrollbar;
+
+    * {
+      box-sizing: border-box;
+      @include base-scrollbar;
+    }
+
+    /*a标签 */
+    a {
+      color: $base-color-blue;
+      text-decoration: none;
+    }
+
+    /*图片 */
+    img {
+      object-fit: cover;
+    }
+
+    /*图标 */
+    svg,
+    i {
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    /*el-button按钮 */
+    a + a,
+    span + a {
+      .el-button {
+        margin-left: 10px;
+      }
+    }
+
+    /*el-scrollbar滚动条 */
+    .el-scrollbar {
+      height: 100%;
+    }
+
+    /*  el-badge */
+    .el-badge__content {
+      border: 0;
+    }
+
+    /* el-tag */
+    .el-tag + .el-tag {
+      margin-left: 10px;
+    }
+
+    /* el-alert */
+    .el-alert {
+      margin: 0 0 $base-padding 0;
+    }
+
+    /* markdown编辑器*/
+    .editor-toolbar {
+      .no-mobile,
+      .fa-question-circle {
+        display: none;
+      }
+    }
+
+    /* el-divider间隔线 */
+    .el-divider--horizontal {
+      margin: 0 0 $base-padding 0;
+
+      .el-divider__text {
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+      }
+    }
+
+    /* el-image-viewer表格大图展示*/
+    .el-image-viewer {
+      &__close {
+        .el-icon-circle-close {
+          color: $base-color-white;
+        }
+      }
+    }
+
+    .meeluo-wrapper {
+      .app-main-container {
+        @include base-scrollbar;
+
+        > [class*="-container"] {
+          padding: $base-padding;
+          background: $base-color-white;
+        }
+      }
+    }
+
+    /* nprogress进度条 */
+    #nprogress {
+      position: fixed;
+      z-index: $base-z-index;
+
+      .bar {
+        background: $base-color-blue !important;
+      }
+
+      .peg {
+        box-shadow: 0 0 10px $base-color-blue, 0 0 5px $base-color-blue !important;
+      }
+    }
+
+    /* el-table表格 */
+    .el-table {
+      .el-table__body-wrapper {
+        @include base-scrollbar;
+      }
+
+      th {
+        background: #f5f7fa;
+      }
+
+      td,
+      th {
+        position: relative;
+        box-sizing: border-box;
+        padding: 7.5px 0;
+
+        .cell {
+          font-size: $base-font-size-default;
+          font-weight: normal;
+          color: #606266;
+
+          .el-image {
+            width: 50px;
+            height: 50px;
+            border-radius: $base-border-radius;
+          }
+        }
+      }
+    }
+
+    /* el-pagination分页 */
+    .el-pagination {
+      padding: 2px 5px;
+      margin: $base-padding 0 0 0;
+      font-weight: normal;
+      color: $base-color-black;
+      text-align: center;
+    }
+
+    /* el-menu菜单开始 */
+
+    .el-menu {
+      user-select: none;
+
+      &.el-menu--popup.el-menu--popup-right-start {
+        @include menu-scrollbar;
+      }
+
+      &.el-menu--popup.el-menu--popup-bottom-start {
+        @include menu-scrollbar;
+      }
+    }
+
+    /* el-dialog 弹窗 */
+    @media (max-width: 576px) {
+      .el-dialog {
+        width: auto !important;
+        margin: 10px;
+      }
+    }
+
+    .el-dialog,
+    .el-message-box {
+      &__body {
+        border-top: 1px solid $base-border-color;
+      }
+
+      &__footer {
+        padding: $base-padding;
+        text-align: right;
+        border-top: 1px solid $base-border-color;
+      }
+
+      &__content {
+        padding: $base-padding;
+      }
+    }
+
+    /* el-card卡片 */
+    .el-card {
+      margin-bottom: $base-padding;
+
+      &__body {
+        padding: $base-padding;
+      }
+    }
+  }
+}

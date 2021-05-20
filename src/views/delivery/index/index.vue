@@ -1,0 +1,160 @@
+<template>
+  <div class="delivery-container">
+    <div v-show="showList" class="delivery-list-container">
+      <vab-query-form>
+        <vab-query-form-left-panel :span="12">
+          <el-button icon="el-icon-plus" type="primary" @click="handleEdit">
+            添加
+          </el-button>
+        </vab-query-form-left-panel>
+      </vab-query-form>
+
+      <el-table
+        v-loading="listLoading"
+        :data="list"
+        :element-loading-text="elementLoadingText"
+        row-key="id"
+        default-expand-all
+      >
+        <el-table-column prop="name" label="模板名称"></el-table-column>
+        <el-table-column prop="method" label="计费方式">
+          <template slot-scope="{ row }">
+            <el-tooltip
+              :content="getMethod(row.method)"
+              class="item"
+              effect="dark"
+              placement="top-start"
+            >
+              <el-tag :type="row.method | methodFilter">
+                {{ getMethod(row.method) }}
+              </el-tag>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+        <el-table-column prop="order" label="分类顺序"></el-table-column>
+        <el-table-column
+          prop="created_at"
+          label="创建时间"
+          :formatter="formatTime"
+        ></el-table-column>
+        <el-table-column label="操作" width="160">
+          <template v-slot="scope">
+            <el-button type="primary" @click="handleEdit(scope.row)">
+              编辑
+            </el-button>
+            <el-button type="danger" @click="handleDelete(scope.row)">
+              删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        background
+        :current-page="queryForm.page_index"
+        :page-size="queryForm.page_size"
+        :layout="layout"
+        :total="total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      ></el-pagination>
+    </div>
+    <div class="delivery-edit-container">
+      <edit
+        v-show="!showList"
+        ref="edit"
+        @cancel="cancelEdit"
+        @fetchData="fetchData"
+      ></edit>
+    </div>
+  </div>
+</template>
+
+<script>
+  import { getList, doDelete } from "@/api/delivery";
+  import Edit from "./components/DeliveryEdit";
+  import dayjs from "dayjs";
+
+  export default {
+    name: "GoodsDelivery",
+    components: {
+      Edit,
+    },
+    filters: {
+      methodFilter(method) {
+        switch (method) {
+          case 10:
+            return "default";
+          case 20:
+            return "success";
+          default:
+            return "info";
+        }
+      },
+    },
+    data() {
+      return {
+        showList: true,
+        list: [],
+        listLoading: true,
+        layout: "total, sizes, prev, pager, next, jumper",
+        total: 0,
+        elementLoadingText: "正在加载...",
+        queryForm: {
+          page_index: 1,
+          page_size: 20,
+        },
+      };
+    },
+    created() {
+      this.fetchData();
+    },
+    methods: {
+      cancelEdit() {
+        this.showList = true;
+      },
+      getMethod(method) {
+        switch (method) {
+          case 10:
+            return "按件计费";
+          case 20:
+            return "按重量计费";
+          default:
+            return "未设置";
+        }
+      },
+      handleEdit(row) {
+        this.showList = false;
+        if (row.id) {
+          this.$refs["edit"].showEdit(row);
+        } else {
+          this.$refs["edit"].showEdit();
+        }
+      },
+      handleSizeChange(val) {
+        this.queryForm.page_size = val;
+        this.fetchData();
+      },
+      handleCurrentChange(val) {
+        this.queryForm.page_index = val;
+        this.fetchData();
+      },
+      handleDelete(row) {
+        this.$baseConfirm("你确定要删除当前项吗", null, async () => {
+          await doDelete(row.id);
+          this.$baseMessage("删除成功", "success");
+          this.fetchData();
+        });
+      },
+      async fetchData() {
+        this.listLoading = true;
+        const { data } = await getList(this.queryForm);
+        this.list = data.rows;
+        this.total = data.count;
+        this.listLoading = false;
+      },
+      formatTime(row, column, cellValue) {
+        return dayjs(cellValue).format("YYYY-MM-DD HH:mm:ss");
+      },
+    },
+  };
+</script>

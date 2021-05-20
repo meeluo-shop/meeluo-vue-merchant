@@ -1,0 +1,92 @@
+{
+  "name": "meeluo-vue-merchant",
+  "version": "1.0.0",
+  "scripts": {
+    "format": "prettier --write \"src/**/*.js\"",
+    "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve --mode dev",
+    "build": "vue-cli-service build",
+    "deploy:prod": "npm run build && python3 script/deploy.py",
+    "build:report": "vue-cli-service build --report",
+    "globle": "npm install -g cnpm --registry=https://registry.npm.taobao.org&&cnpm i rimraf npm-check-updates nrm -g&&rimraf node_modules&&cnpm i",
+    "lint": "vue-cli-service lint --fix",
+    "lint:style": "stylelint-config-prettier-check",
+    "inspect": "vue-cli-service inspect",
+    "template": "plop",
+    "clear": "npm cache clean -f&&rimraf node_modules&&cnpm i&&increase-memory-limit",
+    "use:npm": "nrm use npm",
+    "use:taobao": "nrm use taobao",
+    "update": "ncu -u --concurrency 10 --timeout 80000&&cnpm i",
+    "update:globle": "ncu -g --concurrency 10 --timeout 80000",
+    "push": "start ./push.sh",
+    "deploy": "start ./deploy.sh",
+    "increase-memory-limit": "increase-memory-limit",
+    "docker:build": "npm run build&&docker build --pull --rm -f \"dockerfile\" -t vueadminbeautifulpro:latest \".\"&&docker run --rm -d  -p 80:80/tcp vueadminbeautifulpro:latest"
+  },
+  "husky": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,scss,vue}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "clipboard": "^2.0.6",
+    "core-js": "^3.6.5",
+    "crypto-js": "^4.0.0",
+    "dayjs": "^1.8.35",
+    "echarts": "^4.9.0",
+    "element-ui": "^2.15.0",
+    "file-saver": "^2.0.2",
+    "lodash": "^4.17.20",
+    "nprogress": "^0.2.0",
+    "qiniu-js": "^3.1.1",
+    "qs": "^6.9.4",
+    "remixicon": "^2.5.0",
+    "screenfull": "^5.0.2",
+    "sortablejs": "^1.12.0",
+    "vue": "^2.6.12",
+    "vue-echarts": "^4.1.0",
+    "vue-router": "^3.4.3",
+    "vuex": "^3.5.1",
+    "zx-count": "^0.3.7",
+    "zx-player": "^1.0.1",
+    "zx-templates": "^0.0.14"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.5.4",
+    "@vue/cli-plugin-eslint": "^4.5.4",
+    "@vue/cli-service": "^4.5.4",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "body-parser": "^1.19.0",
+    "chalk": "^4.1.0",
+    "chokidar": "^3.4.2",
+    "compression-webpack-plugin": "^5.0.2",
+    "eslint": "^7.8.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-vue": "^6.2.2",
+    "filemanager-webpack-plugin": "^2.0.5",
+    "husky": "^4.3.0",
+    "increase-memory-limit": "^1.0.7",
+    "plop": "^2.7.4",
+    "prettier": "^2.1.1",
+    "raw-loader": "^4.0.1",
+    "sass": "^1.26.10",
+    "sass-loader": "^10.0.2",
+    "script-loader": "^0.7.2",
+    "stylelint": "^13.7.0",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-recess-order": "^2.1.0",
+    "svg-sprite-loader": "^5.0.0",
+    "vue-template-compiler": "^2.6.12",
+    "webpackbar": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=8.9",
+    "npm": ">= 3.0.0"
+  }
+}
