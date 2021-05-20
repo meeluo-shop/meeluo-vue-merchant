@@ -26,7 +26,7 @@
 
 ## 演示地址
 
-商家后台：http://merchant.meeluo.com/index.html 账号 15888888888 密码 123456
+商家后台：http://merchant.meeluo.com/index.html (关注下方公众号，回复后台密码)
 
 移动端：1. 扫描二维码
 
@@ -67,7 +67,6 @@
 
 ### 2. 移动端截图
 
-<img src="https://assets.meeluo.com/3388045433126912/2491620826749_.pic.jpg"/>
 <img src="https://assets.meeluo.com/3388045433126912/2531620827169_.pic.jpg"/>
 <img src="https://assets.meeluo.com/3388045433126912/2511620826751_.pic.jpg"/>
 <img src="https://assets.meeluo.com/3388045433126912/2521620826752_.pic.jpg"/>
